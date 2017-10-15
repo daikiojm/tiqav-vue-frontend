@@ -1,13 +1,18 @@
 <template>
-<div class="wapper">
+<div class="_wapper">
   <p>Random</p>
-  <p>{{ results }}</p>
+  <!-- <p>{{ results }}</p> -->
+  <app-images v-bind:input-images="results"></app-images>
 </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import jsonpAdapter from 'axios-jsonp'
+import Images from './../shared/Images'
+
+Vue.component('app-images', Images)
 
 export default {
   data () {
@@ -31,4 +36,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+._wapper {
+  margin: 20px 10%;
+}
 </style>

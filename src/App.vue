@@ -23,7 +23,7 @@ Vue.component('app-footer', Footer)
 html {
   height: 100%;
 }
-body{
+body {
   height: 100%;
   margin: 0;
 }
