@@ -1,30 +1,46 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <!-- element-uiのテスト -->
-    <div class="block">
-      <div class="block">
-        <el-date-picker type="datetime" placeholder="日付の選択"></el-date-picker>
-      </div>
+    <app-header></app-header>
+    <div class="main-area-container">
+      <router-view/>
     </div>
-    <!-- element-uiのテスト -->
-    <router-view/>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import Header from './components/shared/Header'
+import Footer from './components/shared/Footer'
 export default {
   name: 'app'
 }
+Vue.component('app-header', Header)
+Vue.component('app-footer', Footer)
 </script>
 
 <style lang="scss">
+html {
+  height: 100%;
+}
+body{
+  height: 100%;
+  margin: 0;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.main-area-container {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+}
+app-footer {
+  width: 100%;
+  position: relative;
+  bottom: 0;
 }
 </style>

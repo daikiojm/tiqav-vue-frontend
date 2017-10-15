@@ -1,4 +1,5 @@
 <template>
+  <p>Search</p>
 </template>
 
 <script>

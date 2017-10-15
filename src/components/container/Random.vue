@@ -1,4 +1,5 @@
 <template>
+  <p>Random</p>
 </template>
 
 <script>

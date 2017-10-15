@@ -1,4 +1,5 @@
 <template>
+  <p>Newest</p>
 </template>
 
 <script>
