@@ -4,6 +4,8 @@
     <el-menu-item index="1"><router-link to="search">Search</router-link></el-menu-item>
     <el-menu-item index="2"><router-link to="newest">Newest</router-link></el-menu-item>
     <el-menu-item index="3"><router-link to="random">Random</router-link></el-menu-item>
+    <!-- <el-menu-item id="search-input"><el-input placeholder="tiqavを検索" icon="search" v-model="input2" :on-icon-click="handleIconClick"></el-input></el-menu-item> -->
+    <el-menu-item index="4" id="search-input"><el-input placeholder="tiqavを検索" icon="search"></el-input></el-menu-item>
   </el-menu>
 </template>
 
@@ -39,4 +41,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+#search-input {
+  float: right;
+}
 </style>
