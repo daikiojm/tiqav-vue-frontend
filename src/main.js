@@ -3,7 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Element from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/ja'
+import 'element-ui/lib/theme-default/index.css'
 
+Vue.use(Element, { locale })
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
