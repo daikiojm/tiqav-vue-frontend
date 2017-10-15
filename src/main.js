@@ -6,8 +6,10 @@ import router from './router'
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/ja'
 import 'element-ui/lib/theme-default/index.css'
+import VueLazyload from 'vue-lazyload'
 
 Vue.use(Element, { locale })
+Vue.use(VueLazyload)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
