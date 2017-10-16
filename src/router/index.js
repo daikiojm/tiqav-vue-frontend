@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Newest from '@/components/container/Newest'
 import Random from '@/components/container/Random'
 import Search from '@/components/container/Search'
+import Items from '@/components/container/Items'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: Search
+    },
+    {
+      path: '/items/:id',
+      name: 'Items',
+      component: Items
     }
   ]
 })

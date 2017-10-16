@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="image-wapper" v-for="i in inputImages" :key="i.id" v-bind:style="getImageWapperStyle(i.height, i.width)">
+    <div class="image-wapper" v-for="i in inputImages" :key="i.id" v-bind:style="getImageWapperStyle(i.height, i.width)" v-on:click="onClickThumbnail(i.id)">
       <i v-bind:style="getIStyle(i.height, i.width)"></i>
       <el-tooltip class="item" effect="dark" v-bind:content="i.id" placement="bottom">
         <img class="image" v-lazy="getThumbnail(i.id, i.ext)">
@@ -25,6 +25,11 @@ export default {
     },
     getIStyle (height, width) {
       return { 'padding-bottom': height / width * 100 + '%' }
+    },
+    onClickThumbnail (id) {
+      if (id) {
+        this.$router.push({name: 'Items', params: { id }})
+      }
     }
   }
 }

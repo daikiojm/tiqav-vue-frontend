@@ -1,9 +1,9 @@
 <template>
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
     <el-menu-item index="0">VueTiqav</el-menu-item>
-    <el-menu-item index="1"><router-link to="search">Search</router-link></el-menu-item>
-    <el-menu-item index="2"><router-link to="newest">Newest</router-link></el-menu-item>
-    <el-menu-item index="3"><router-link to="random">Random</router-link></el-menu-item>
+    <el-menu-item index="1"><router-link to="/search">Search</router-link></el-menu-item>
+    <el-menu-item index="2"><router-link to="/newest">Newest</router-link></el-menu-item>
+    <el-menu-item index="3"><router-link to="/random">Random</router-link></el-menu-item>
     <el-menu-item index="4" id="search-input">
       <el-input placeholder="tiqavを検索" icon="search" v-model="searchWord" @keyup.enter.native="handleSearch" :on-icon-click="handleSearch"></el-input>
     </el-menu-item>
@@ -43,7 +43,7 @@ export default {
       return activeIndex
     },
     handleSearch () {
-      this.$router.push({path: 'search', query: { q: this.searchWord }})
+      this.$router.push({path: '/search', query: { q: this.searchWord }})
     }
   }
 }
