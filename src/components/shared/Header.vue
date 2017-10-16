@@ -19,6 +19,11 @@ export default {
       searchWord: ''
     }
   },
+  watch: {
+    '$route' (to, from) {
+      this.activeIndex = this.getActiveIndex()
+    }
+  },
   created: function () {
     this.activeIndex = this.getActiveIndex()
   },

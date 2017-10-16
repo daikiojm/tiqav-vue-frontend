@@ -23,7 +23,6 @@ export default {
     '$route' (to, from) {
       let query = this.$route.query.q
       if (query) {
-        console.log('1', query)
         this.search(query)
       }
     }
@@ -35,7 +34,6 @@ export default {
   },
   methods: {
     search (word) {
-      console.log('hoge: ', word)
       const resourceUrl = 'http://api.tiqav.com/search.json?q=' + word
       const config = { adapter: jsonpAdapter }
       axios.get(resourceUrl, config)
