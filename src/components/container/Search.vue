@@ -19,19 +19,33 @@ export default {
       results: ''
     }
   },
+  watch: {
+    '$route' (to, from) {
+      let query = this.$route.query.q
+      if (query) {
+        console.log('1', query)
+        this.search(query)
+      }
+    }
+  },
   created: function () {
-    console.log(this.$route.query.q)
     let searchWord = 'ちくわぶ'
     if (this.$route.query.q) { searchWord = this.$route.query.q }
-    const resourceUrl = 'http://api.tiqav.com/search.json?q=' + searchWord
-    const config = { adapter: jsonpAdapter }
-    axios.get(resourceUrl, config)
-      .then((res) => {
-        this.results = res.data
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    this.search(searchWord)
+  },
+  methods: {
+    search (word) {
+      console.log('hoge: ', word)
+      const resourceUrl = 'http://api.tiqav.com/search.json?q=' + word
+      const config = { adapter: jsonpAdapter }
+      axios.get(resourceUrl, config)
+        .then((res) => {
+          this.results = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
 }
 </script>
