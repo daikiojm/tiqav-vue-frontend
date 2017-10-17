@@ -25,7 +25,9 @@ export default {
     const config = { adapter: jsonpAdapter }
     axios.get(resourceUrl, config)
       .then((res) => {
-        this.results = res.data
+        if (res.status === 200) {
+          this.results = res.data
+        }
       })
       .catch((err) => {
         console.log(err)

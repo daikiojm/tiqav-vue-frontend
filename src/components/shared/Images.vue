@@ -14,7 +14,7 @@ export default {
   name: 'images',
   props: ['inputImages'],
   methods: {
-    getThumbnail (id, ext) {
+    getThumbnail (id) {
       return process.env.IMAGE_ENDPOINT + '/' + id + '.th.jpg'
     },
     getImageWapperStyle (height, width) {
