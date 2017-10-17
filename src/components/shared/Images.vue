@@ -15,7 +15,7 @@ export default {
   props: ['inputImages'],
   methods: {
     getThumbnail (id, ext) {
-      return 'http://img.tiqav.com/' + id + '.th.jpg'
+      return process.env.IMAGE_ENDPOINT + '/' + id + '.th.jpg'
     },
     getImageWapperStyle (height, width) {
       return {

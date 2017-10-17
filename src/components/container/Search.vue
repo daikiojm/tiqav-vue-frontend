@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     search (word) {
-      const resourceUrl = 'http://api.tiqav.com/search.json?q=' + word
+      const resourceUrl = process.env.API_ENDPOINT + '/search.json?q=' + word
       const config = { adapter: jsonpAdapter }
       axios.get(resourceUrl, config)
         .then((res) => {

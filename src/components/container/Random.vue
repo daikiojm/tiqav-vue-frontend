@@ -21,7 +21,7 @@ export default {
     }
   },
   created: function () {
-    const resourceUrl = 'http://api.tiqav.com/search/random.json'
+    const resourceUrl = process.env.API_ENDPOINT + '/search/random.json'
     const config = { adapter: jsonpAdapter }
     axios.get(resourceUrl, config)
       .then((res) => {
