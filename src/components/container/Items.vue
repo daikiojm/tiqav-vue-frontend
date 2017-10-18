@@ -4,7 +4,7 @@
   <el-card class="mainimage-media">
     <p class="mainimage-id">{{mainItem.id}}</p>
     <div class="image-wapper">
-      <img v-bind:src="getImage()" alt="">
+      <img v-bind:src="getImage()" v-bind:alt="mainItem.id">
     </div>
     <p class="mainimage-source-url">ソース: <span>{{mainItem.source_url}}</span></p>
     <p class="mainimage-tags">
@@ -14,29 +14,74 @@
 
   <el-row>
     <el-col :span="24">
-    <div class="grid-content bg-purple">
+    <div class="mainimage-info-wapper">
       <el-card>
-        <p>hoge</p>
+        <el-row :gutter="20">
+          <el-col :span="12" :offset="6">
+            <div class="mainimage-info-forms">
+              <el-row class="form-row">
+                <el-col :span="18">
+                  <el-form label-width="100px">
+                    <el-form-item label="image">
+                      <span slot="label">画像URL:</span>
+                      <el-input placeholder="" v-bind:value="getNakedImageUrl()"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </el-col>
+                <el-col :span="4">
+                  <el-button>コピー</el-button>
+                </el-col>
+              </el-row>
+              <el-row class="form-row">
+                <el-col :span="18">
+                  <el-form label-width="100px">
+                    <el-form-item label="image">
+                      <span slot="label">リンク:</span>
+                      <el-input placeholder="" v-bind:value="geImageLink()"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </el-col>
+                <el-col :span="4">
+                  <el-button>コピー</el-button>
+                </el-col>
+              </el-row>
+              <el-row class="form-row">
+                <el-col :span="18">
+                  <el-form label-width="100px">
+                    <el-form-item label="image">
+                      <span slot="label">Markdown:</span>
+                      <el-input placeholder="" v-bind:value="getMarkdownLink()"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </el-col>
+                <el-col :span="4">
+                  <el-button>コピー</el-button>
+                </el-col>
+              </el-row>
+            </div></el-col>
+        </el-row>
+
       </el-card>
     </div>
     </el-col>
   </el-row>
 
   <el-row :gutter="20">
-    <el-col :span="8"><div class="grid-content bg-purple"></div>
+    <el-col :span="8">
+      <div class="subimage-media"></div>
       <el-card>
         <p>hoge</p>
       </el-card>
     </el-col>
     <el-col :span="8">
-      <div class="grid-content bg-purple-light">
+      <div class="subimage-media">
         <el-card>
           <p>hoge</p>
         </el-card>
       </div>
     </el-col>
     <el-col :span="8">
-      <div class="grid-content bg-purple">
+      <div class="subimage-media">
         <el-card>
           <p>hoge</p>
         </el-card>
@@ -70,7 +115,7 @@ export default {
   },
   methods: {
     getImageInfo (id) {
-      const resourceUrl = process.env.API_ENDPOINT + '/images/' + id + '.json'
+      const resourceUrl = `${process.env.API_ENDPOINT}/images/${id}.json`
       const config = { adapter: jsonpAdapter }
       axios.get(resourceUrl, config)
         .then((res) => {
@@ -85,10 +130,10 @@ export default {
         })
     },
     getImage () {
-      return process.env.IMAGE_ENDPOINT + '/' + this.mainItem.id + '.' + this.mainItem.ext
+      return `${process.env.IMAGE_ENDPOINT}/${this.mainItem.id}.${this.mainItem.ext}`
     },
     getTags (id) {
-      const resourceUrl = process.env.API_ENDPOINT + '/images/' + id + '/tags.json'
+      const resourceUrl = `${process.env.API_ENDPOINT}/images/${id}/tags.json`
       const config = { adapter: jsonpAdapter }
       axios.get(resourceUrl, config)
         .then((res) => {
@@ -100,6 +145,22 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+    },
+    // リンク先は本家tiqav
+    getNakedImageUrl () {
+      return `${process.env.IMAGE_ENDPOINT}/${this.mainItem.id}.${this.mainItem.ext}`
+    },
+    // リンク先は本家tiqav
+    geImageLink () {
+      const imageUrl = this.getNakedImageUrl()
+      const _tag = `<a href="${process.env.IMAGE_ENDPOINT}/${this.mainItem.id}" target="_blank"><img alt="${this.mainItem.id}" src="${imageUrl}" /></a>`
+      return _tag
+    },
+    getMarkdownLink () {
+      const thumbnailUrl = `${process.env.IMAGE_ENDPOINT}/${this.mainItem.id}.th.${this.mainItem.ext}`
+      const _tags = this.mainItem.tags.length !== 0 ? this.mainItem.tags.join(' ') : ''
+      const _markdown = `[![${_tags}](${thumbnailUrl})](${process.env.IMAGE_ENDPOINT}/${this.mainItem.id})`
+      return _markdown
     }
   }
 }
@@ -125,32 +186,13 @@ img {
     margin-right: 10px;
   }
 }
-
 .el-row {
-  margin-top: 20;
   margin-bottom: 20px;
   &:last-child {
     margin-bottom: 0;
   }
+  &.form-row {
+    margin-bottom: 0;
+  }
 }
-// .el-col {
-//   border-radius: 4px;
-// }
-// .bg-purple-dark {
-//   background: #99a9bf;
-// }
-// .bg-purple {
-//   background: #d3dce6;
-// }
-.bg-purple-light {
-  background: #e5e9f2;
-}
-// .grid-content {
-//   border-radius: 4px;
-//   min-height: 36px;
-// }
-// .row-bg {
-//   padding: 10px 0;
-//   background-color: #f9fafc;
-// }
 </style>
