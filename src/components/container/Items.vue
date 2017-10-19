@@ -29,7 +29,7 @@
                   </el-form>
                 </el-col>
                 <el-col :span="4">
-                  <el-button>コピー</el-button>
+                  <el-button v-clipboard:copy="getNakedImageUrl()">コピー</el-button>
                 </el-col>
               </el-row>
               <el-row class="form-row">
@@ -42,7 +42,7 @@
                   </el-form>
                 </el-col>
                 <el-col :span="4">
-                  <el-button>コピー</el-button>
+                  <el-button v-clipboard:copy="geImageLink()">コピー</el-button>
                 </el-col>
               </el-row>
               <el-row class="form-row">
@@ -55,7 +55,7 @@
                   </el-form>
                 </el-col>
                 <el-col :span="4">
-                  <el-button>コピー</el-button>
+                  <el-button v-clipboard:copy="getMarkdownLink()">コピー</el-button>
                 </el-col>
               </el-row>
             </div></el-col>
