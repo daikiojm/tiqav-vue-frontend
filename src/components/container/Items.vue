@@ -2,9 +2,8 @@
 <div class="_wapper">
   <p>Items</p>
   <el-card class="mainimage-media">
-    <p class="mainimage-id">{{mainItem.id}}</p>
     <div class="image-wapper">
-      <img v-bind:src="getImage()" v-bind:alt="mainItem.id">
+      <img class="main-img" v-bind:src="getImage()" v-bind:alt="mainItem.id">
     </div>
     <p class="mainimage-source-url">ソース: <span>{{mainItem.source_url}}</span></p>
     <p class="mainimage-tags">
@@ -67,25 +66,14 @@
   </el-row>
 
   <el-row :gutter="20">
-    <el-col :span="8">
-      <div class="subimage-media"></div>
+    <el-col :span="8" v-for="i in relatedImages" :key="i.id" v-on:click.native="onClickThumbnail(i.id)">
       <el-card>
-        <p>hoge</p>
+        <div class="subimage-media">
+          <el-tooltip class="media" effect="dark" v-bind:content="i.id" placement="bottom">
+            <img class="related-images" v-bind:src="getThumbnail(i.id)" v-bind:alt="i.id">
+          </el-tooltip>
+        </div>
       </el-card>
-    </el-col>
-    <el-col :span="8">
-      <div class="subimage-media">
-        <el-card>
-          <p>hoge</p>
-        </el-card>
-      </div>
-    </el-col>
-    <el-col :span="8">
-      <div class="subimage-media">
-        <el-card>
-          <p>hoge</p>
-        </el-card>
-      </div>
     </el-col>
 </el-row>
 
@@ -105,13 +93,27 @@ export default {
         ext: '',
         source_url: '',
         tags: ''
-      }
+      },
+      randomImages: '',
+      relatedImages: ''
     }
   },
   created: function () {
     this.mainItem.id = this.$route.params.id
     this.getImageInfo(this.mainItem.id)
     this.getTags(this.mainItem.id)
+    this.getRandomImageData()
+  },
+  watch: {
+    '$route' (to, from) {
+      let query = this.$route.params.id
+      if (query) {
+        this.mainItem.id = this.$route.params.id
+        this.getImageInfo(this.mainItem.id)
+        this.getTags(this.mainItem.id)
+        this.getRandomImageData()
+      }
+    }
   },
   methods: {
     getImageInfo (id) {
@@ -131,6 +133,9 @@ export default {
     },
     getImage () {
       return `${process.env.IMAGE_ENDPOINT}/${this.mainItem.id}.${this.mainItem.ext}`
+    },
+    getThumbnail (id) {
+      return process.env.IMAGE_ENDPOINT + '/' + id + '.th.jpg'
     },
     getTags (id) {
       const resourceUrl = `${process.env.API_ENDPOINT}/images/${id}/tags.json`
@@ -164,6 +169,39 @@ export default {
     },
     onCopy (e) {
       this.$message('コピーしました。: ' + e.text)
+    },
+    getRandomImageData () {
+      const resourceUrl = process.env.API_ENDPOINT + '/search/random.json'
+      const config = { adapter: jsonpAdapter }
+      axios.get(resourceUrl, config)
+        .then((res) => {
+          if (res.status === 200) {
+            this.randomImages = res.data
+            this.relatedImages = this.getRandomImageDataN(3)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getRandomImageDataN (n) {
+      const result = []
+      const usedIndex = []
+      const len = this.randomImages.length
+      while (result.length < n) {
+        const currentIndex = Math.floor(Math.random() * len)
+        if (usedIndex.indexOf(currentIndex) === -1) {
+          result.push(this.randomImages[currentIndex])
+          usedIndex.push(currentIndex)
+        }
+      }
+      return result
+    },
+    onClickThumbnail (id) {
+      console.log(id)
+      if (id) {
+        this.$router.push({name: 'Items', params: { id }})
+      }
     }
   }
 }
@@ -177,8 +215,14 @@ export default {
 .mainimage-media {
   margin-bottom: 20px;
 }
-img {
-  width: 100%;
+.main-img {
+  height: 450px;
+  object-fit: cover;
+}
+.related-images {
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
 }
 .mainimage-source-url {
   text-align: right;

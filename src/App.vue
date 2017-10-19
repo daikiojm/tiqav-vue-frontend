@@ -36,7 +36,7 @@ body {
 }
 .main-area-container {
   width: 100%;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 200px);
 }
 app-footer {
   width: 100%;
