@@ -29,7 +29,7 @@
                   </el-form>
                 </el-col>
                 <el-col :span="4">
-                  <el-button v-clipboard:copy="getNakedImageUrl()">コピー</el-button>
+                  <el-button v-clipboard:copy="getNakedImageUrl()" v-clipboard:success="onCopy">コピー</el-button>
                 </el-col>
               </el-row>
               <el-row class="form-row">
@@ -42,7 +42,7 @@
                   </el-form>
                 </el-col>
                 <el-col :span="4">
-                  <el-button v-clipboard:copy="geImageLink()">コピー</el-button>
+                  <el-button v-clipboard:copy="geImageLink()" v-clipboard:success="onCopy">コピー</el-button>
                 </el-col>
               </el-row>
               <el-row class="form-row">
@@ -55,7 +55,7 @@
                   </el-form>
                 </el-col>
                 <el-col :span="4">
-                  <el-button v-clipboard:copy="getMarkdownLink()">コピー</el-button>
+                  <el-button v-clipboard:copy="getMarkdownLink()" v-clipboard:success="onCopy">コピー</el-button>
                 </el-col>
               </el-row>
             </div></el-col>
@@ -161,6 +161,9 @@ export default {
       const _tags = this.mainItem.tags.length !== 0 ? this.mainItem.tags.join(' ') : ''
       const _markdown = `[![${_tags}](${thumbnailUrl})](${process.env.IMAGE_ENDPOINT}/${this.mainItem.id})`
       return _markdown
+    },
+    onCopy (e) {
+      this.$message('コピーしました。: ' + e.text)
     }
   }
 }
