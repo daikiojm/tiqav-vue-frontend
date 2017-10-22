@@ -5,18 +5,19 @@
     <el-menu-item index="2"><router-link to="/newest">Newest</router-link></el-menu-item>
     <el-menu-item index="3"><router-link to="/random">Random</router-link></el-menu-item>
     <el-menu-item index="4" id="search-input">
-      <el-input placeholder="tiqavを検索" icon="search" v-model="searchWord" @keyup.enter.native="handleSearch" :on-icon-click="handleSearch"></el-input>
+      <search-form></search-form>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script>
+import SearchForm from './SearchForm'
+
 export default {
   name: 'header',
   data () {
     return {
-      activeIndex: '1',
-      searchWord: ''
+      activeIndex: '1'
     }
   },
   watch: {
@@ -45,6 +46,9 @@ export default {
     handleSearch () {
       this.$router.push({path: '/search', query: { q: this.searchWord }})
     }
+  },
+  components: {
+    SearchForm
   }
 }
 </script>
