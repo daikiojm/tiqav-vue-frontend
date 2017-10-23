@@ -42,22 +42,6 @@ export default {
           console.log(err)
         })
     },
-    createFilter (queryString) {
-      return (word) => {
-        return (word.value.indexOf(queryString.toLowerCase()) === 0)
-      }
-    },
-    getWords (word, cb) {
-      const resourceUrl = `${process.env.API_ENDPOINT}/tags.json?q=${word}`
-      const config = { adapter: jsonpAdapter }
-      axios.get(resourceUrl, config)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
     handleSearch () {
       this.$router.push({path: '/search', query: { q: this.searchWord }})
     }

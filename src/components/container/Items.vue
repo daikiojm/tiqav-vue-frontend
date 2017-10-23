@@ -6,9 +6,7 @@
       <img class="main-img" v-bind:src="getImage()" v-bind:alt="mainItem.id">
     </div>
     <p class="mainimage-source-url">ソース: <span>{{mainItem.source_url}}</span></p>
-    <p class="mainimage-tags">
-      <el-tag type="gray" v-for="tag in mainItem.tags" :key="tag">#{{tag}}</el-tag>
-    </p>
+    <tag-list v-bind:input-tags="mainItem.tags"></tag-list>
   </el-card>
 
   <el-row>
@@ -84,6 +82,7 @@
 // import Vue from 'vue'
 import axios from 'axios'
 import jsonpAdapter from 'axios-jsonp'
+import TagList from './../shared/TagList'
 
 export default {
   data () {
@@ -121,7 +120,6 @@ export default {
       const config = { adapter: jsonpAdapter }
       axios.get(resourceUrl, config)
         .then((res) => {
-          console.log(res)
           if (res.status === 200) {
             this.mainItem.ext = res.data.ext
             this.mainItem.source_url = res.data.source_url
@@ -142,7 +140,6 @@ export default {
       const config = { adapter: jsonpAdapter }
       axios.get(resourceUrl, config)
         .then((res) => {
-          console.log(res)
           if (res.status === 200) {
             this.mainItem.tags = res.data
           }
@@ -198,11 +195,13 @@ export default {
       return result
     },
     onClickThumbnail (id) {
-      console.log(id)
       if (id) {
         this.$router.push({name: 'Items', params: { id }})
       }
     }
+  },
+  components: {
+    TagList
   }
 }
 </script>
@@ -226,12 +225,6 @@ export default {
 }
 .mainimage-source-url {
   text-align: right;
-}
-.mainimage-tags {
-  text-align: left;
-  .el-tag {
-    margin-right: 10px;
-  }
 }
 .el-row {
   margin-bottom: 20px;
