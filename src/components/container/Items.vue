@@ -135,7 +135,7 @@ export default {
       return `${process.env.IMAGE_ENDPOINT}/${this.mainItem.id}.${this.mainItem.ext}`
     },
     getThumbnail (id) {
-      return process.env.IMAGE_ENDPOINT + '/' + id + '.th.jpg'
+      return `${process.env.IMAGE_ENDPOINT}/${id}.th.jpg`
     },
     getTags (id) {
       const resourceUrl = `${process.env.API_ENDPOINT}/images/${id}/tags.json`
